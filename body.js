@@ -37,10 +37,10 @@ function Body() {
 
   this.applyForce = function(force, location) { //Apply a force(kg * meters per sec^2(N)) to the body at a location(meters) relative to the center of mass and heading of the body
     if(force.mag() > 0) {
-      this.acc.add(force.copy().mult(this.ppm /(this.ups * this.ups * this.mass)))
+      this.acc.add(force.copy().rotate(this.heading).mult(this.ppm /(this.ups * this.ups * this.mass)))
       let rad = 0
       if(location && location.mag() > 0){
-        rad = location.mag() * this.ppm * Math.sin(location.angleBetween(force) - this.heading)
+        rad = location.mag() * this.ppm * Math.sin(location.angleBetween(force))
         this.angleA += force.mag() * (this.ppm / (this.ups * this.ups)) * rad / (this.inertia * (this.ppm * this.ppm))
       }
     }
